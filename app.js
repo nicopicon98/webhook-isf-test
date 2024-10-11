@@ -41,7 +41,6 @@ app.post('/webhook', async (req, res) => {
 
 // Función para crear Pull Request en la organización de destino
 async function createPullRequest() {
-  // const url = 'https://dev.azure.com/{isf-EmergencyManagementOrganization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests?api-version=6.0';
   const url = 'https://dev.azure.com/ISF-TEST/ARRO-PROYECT/_apis/git/repositories/a896767a-88fd-4f40-9620-480f8e252b51/pullRequests?api-version=6.0';
 
   const data = {
@@ -49,23 +48,27 @@ async function createPullRequest() {
     targetRefName: 'refs/heads/dev_bblabs',
     title: 'Auto PR from master to dev_bblabs',
     description: 'This PR was automatically created from blackbird-labs',
-    reviewers: [] // Opcional, puedes agregar revisores aquí
+    reviewers: []
   };
+
+  const token = process.env.KEVIN_AZURE_PAT;
+  const encodedPat = Buffer.from(`:${token}`).toString('base64');
 
   try {
     const response = await axios.post(url, data, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.KEVIN_AZURE_PAT}` // Utiliza el PAT desde la variable de entorno
+        'Authorization': `Basic ${encodedPat}`
       }
     });
 
     console.log('PR created successfully:', response.data);
   } catch (error) {
-    console.error('Error creating PR:', error);
+    console.error('Error creating PR:', error.response ? error.response.data : error.message);
     throw error;
   }
 }
+
 
 app.listen(PORT, () => {
   console.log(`Webhook service running on port ${PORT}`);
