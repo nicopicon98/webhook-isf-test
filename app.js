@@ -11,6 +11,10 @@ const PORT = 3000; // Cambia esto según tu configuración
 // Middleware para parsear JSON
 app.use(bodyParser.json());
 
+app.get("/test", (req, res) => {
+  res.send("Hello World!");
+});
+
 app.post('/webhook', async (req, res) => {
   const { resource } = req.body;
   console.log(resource);
