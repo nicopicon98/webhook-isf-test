@@ -56,7 +56,7 @@ async function createPullRequest() {
     const response = await axios.post(url, data, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.AZURE_PAT}` // Utiliza el PAT desde la variable de entorno
+        'Authorization': `Bearer ${process.env.KEVIN_AZURE_PAT}` // Utiliza el PAT desde la variable de entorno
       }
     });
 
