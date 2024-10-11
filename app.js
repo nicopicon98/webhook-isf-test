@@ -22,7 +22,7 @@ app.post('/webhook', async (req, res) => {
 
   // Verificar si el evento es un push a la rama master
   if (resource.refUpdates && resource.refUpdates[0].name === 'refs/heads/master') {
-    console.log('Push detected on master branch');
+    console.log('Push detected on master branch uwu');
 
     console.log("resource.refUpdates", resource.refUpdates);
 
