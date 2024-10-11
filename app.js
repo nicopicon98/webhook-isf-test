@@ -17,12 +17,14 @@ app.get("/test", (req, res) => {
 
 app.post('/webhook', async (req, res) => {
   const { resource } = req.body;
-  console.log(resource);
+  console.log("resource: ", resource);
   console.log("req.body:", req.body);
 
   // Verificar si el evento es un push a la rama master
   if (resource.refUpdates && resource.refUpdates[0].name === 'refs/heads/master') {
     console.log('Push detected on master branch');
+
+    console.log("resource.refUpdates", resource.refUpdates);
 
     try {
       // Llamar a la función para crear PR en el repositorio destino
@@ -39,7 +41,8 @@ app.post('/webhook', async (req, res) => {
 
 // Función para crear Pull Request en la organización de destino
 async function createPullRequest() {
-  const url = 'https://dev.azure.com/{isf-EmergencyManagementOrganization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests?api-version=6.0';
+  // const url = 'https://dev.azure.com/{isf-EmergencyManagementOrganization}/{project}/_apis/git/repositories/{repositoryId}/pullRequests?api-version=6.0';
+  const url = 'https://dev.azure.com/ISF-TEST/ARRO-PROYECT/_apis/git/repositories/a896767a-88fd-4f40-9620-480f8e252b51/pullRequests?api-version=6.0';
 
   const data = {
     sourceRefName: 'refs/heads/master',
