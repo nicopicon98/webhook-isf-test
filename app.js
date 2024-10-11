@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.post('/webhook', async (req, res) => {
   const { resource } = req.body;
   console.log(resource);
+  console.log("req.body:", req.body);
 
   // Verificar si el evento es un push a la rama master
   if (resource.refUpdates && resource.refUpdates[0].name === 'refs/heads/master') {
